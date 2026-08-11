@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laskin</title>
+</head>
+<body>
+    <h1>Laskin</h1>
+
+    <input id="number1" type="text" placeholder="Ensimmäinen numero">
+
+    <select id="operation">
+        <option value="sum">Summa</option>
+        <option value="difference">Erotus</option>
+        <option value="multiplication">Kertolasku</option>
+        <option value="division">Jakolasku</option>
+    </select>
+
+    <input id="number2" type="text" placeholder="Toinen numero">
+
+    <button id="calculate">Laske</button>
+
+    <p>Tulos: <span id="result"></span></p>
+
+    <script type="module" src="./build/calculator.js"></script>
+</body>
+</html>
