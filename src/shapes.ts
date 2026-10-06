@@ -1,76 +1,129 @@
-export class Point { 
-    x: number; 
-    y: number; 
- 
-    constructor(x: number, y: number) { 
-        this.x = x; 
-        this.y = y; 
-    } 
-} 
- 
-export class Size { 
-    width: number; 
-    height: number; 
- 
-    constructor(width: number, height: number) { 
-        this.width = width; 
-        this.height = height; 
-    } 
-} 
+export class Point {
+    private _x: number;
+    private _y: number;
 
-export abstract class Shape {
-    style: string;
-
-    constructor(style: string) {
-        this.style = style;
+    public constructor(x: number, y: number) {
+        this._x = x;
+        this._y = y;
     }
 
-    abstract draw(ctx: CanvasRenderingContext2D): void;
+    public get x(): number {
+        return this._x;
+    }
+
+    public get y(): number {
+        return this._y;
+    }
+
+    public toString(): string {
+        return `Point (${this.x}, ${this.y})`;
+    }
 }
- 
-export class Rectangle extends Shape { 
-    location: Point; 
-    size: Size; 
- 
-    constructor(x: number, y: number, width: number, height: number) { 
+
+export class Size {
+    private _width: number;
+    private _height: number;
+
+    public constructor(width: number, height: number) {
+        this._width = width;
+        this._height = height;
+    }
+
+    public get width(): number {
+        return this._width;
+    }
+
+    public get height(): number {
+        return this._height;
+    }
+
+    public toString(): string {
+        return `Size (${this.width}, ${this.height})`;
+    }
+}
+
+export interface Shape {
+    draw(ctx: CanvasRenderingContext2D): void;
+    toString(): string;
+}
+
+export abstract class BaseShape implements Shape {
+    private _style: string;
+
+    public constructor(style: string) {
+        this._style = style;
+    }
+
+    public get style(): string {
+        return this._style;
+    }
+
+    public abstract draw(ctx: CanvasRenderingContext2D): void;
+
+    public toString(): string {
+        return `Shape with style ${this.style}`;
+    }
+}
+
+export class Rectangle extends BaseShape {
+    private location: Point;
+    private size: Size;
+
+    public constructor(
+        x: number,
+        y: number,
+        width: number,
+        height: number
+    ) {
         super("blue");
 
-        this.location = new Point(x, y); 
-        this.size = new Size(width, height); 
-    } 
- 
-    draw(ctx: CanvasRenderingContext2D) { 
-        ctx.fillStyle = this.style; 
-        ctx.fillRect( 
-            this.location.x, 
-            this.location.y, 
-            this.size.width, 
-            this.size.height 
-        ); 
-    } 
-} 
- 
-export class Circle extends Shape { 
-    center: Point; 
-    radius: number; 
- 
-    constructor(x: number, y: number, radius: number) { 
+        this.location = new Point(x, y);
+        this.size = new Size(width, height);
+    }
+
+    public draw(ctx: CanvasRenderingContext2D): void {
+        ctx.fillStyle = this.style;
+
+        ctx.fillRect(
+            this.location.x,
+            this.location.y,
+            this.size.width,
+            this.size.height
+        );
+    }
+
+    public override toString(): string {
+        return `Rectangle with location ${this.location}, size ${this.size} and style ${this.style}`;
+    }
+}
+
+export class Circle extends BaseShape {
+    private center: Point;
+    private radius: number;
+
+    public constructor(x: number, y: number, radius: number) {
         super("red");
 
-        this.center = new Point(x, y); 
-        this.radius = radius; 
-    } 
- 
-    draw(ctx: CanvasRenderingContext2D) { 
-        ctx.beginPath(); 
-        ctx.arc( 
-            this.center.x, 
-            this.center.y, 
-            this.radius, 
-            0, 
-            2 * Math.PI 
-        ); 
-        ctx.fillStyle = this.style; 
-        ctx.fill(); 
-    } 
+        this.center = new Point(x, y);
+        this.radius = radius;
+    }
+
+    public draw(ctx: CanvasRenderingContext2D): void {
+        ctx.beginPath();
+
+        ctx.arc(
+            this.center.x,
+            this.center.y,
+            this.radius,
+            0,
+            2 * Math.PI
+        );
+
+        ctx.fillStyle = this.style;
+        ctx.fill();
+    }
+
+    public override toString(): string {
+        return `Circle with center ${this.center}, radius ${this.radius} and style ${this.style}`;
+    }
 }

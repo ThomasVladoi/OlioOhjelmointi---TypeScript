@@ -12,3 +12,5 @@ viewer.addShapes([
     new Circle(350, 300, 70)
 ]);
 
+viewer.printShapes();
+
