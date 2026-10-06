@@ -18,12 +18,14 @@ export class Size {
     } 
 } 
 
-export class Shape {
+export abstract class Shape {
     style: string;
 
     constructor(style: string) {
         this.style = style;
     }
+
+    abstract draw(ctx: CanvasRenderingContext2D): void;
 }
  
 export class Rectangle extends Shape { 
